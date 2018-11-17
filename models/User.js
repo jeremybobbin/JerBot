@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 
 
 const UserSchema = new mongoose.Schema({
-    discordId: String,
+    discordId: {
+        type: String,
+        unique: true
+    },
     joined: {
         type: Date,
         default: Date.now
@@ -17,38 +20,44 @@ const UserSchema = new mongoose.Schema({
 });
 
 
+const getUserInstance = (user, itemName) => 
+    user.items.find(({name}) => name === itemName);
+
 UserSchema.methods = {
 
-    give(item, count) {
+    give(item, count = 1) {
+
+        const userInstance = getUserInstance(this, item);
+
         if(count < 1 || isNaN(count))
             throw `Cannot give ${count} ${item}.`;
 
 
-        if(isNaN(this.items[item].count))
-            this.items[item] = {
+        if(userInstance) userInstance.count += count;
+        else this.items.push({
                 name: item,
-                count: 0
-            };
+                count
+            });
 
 
-        this.items[items].count += count;
-
+        console.log(this);
         return this.save();
     },
 
-    take(item, count) {
+    take(item, count = 1) {
+        const userInstance = getUserInstance(this, item);
+
         if(isNaN(count) || count < 0)
             throw `Cannot take ${count} ${item}`;
 
-        if(isNaN(this.items[item].count))
-            throw `User does not own any ${item}`;
-
-        if(this.items[item].count < count)
-            throw `Tried to take ${count} ${item}s but user only has ${this.items[item].count}`;
-
-        this.items[item].count -= count;
+        if(userInstance === null || userInstance.count < count)
+            throw `User doesn't have enough ${item}`;
 
 
+        userInstance.count -= count;
+
+
+        this.save();
     }
         
     

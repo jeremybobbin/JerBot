@@ -100,6 +100,19 @@ db.on("error", () => {
 
 db.once("open", () => {
     console.log("Connected to database!");
+    const Jer = new User({
+        discordId: "52jdkjsei"
+    });
+
+    Jer.give("Food", 5).then(() => 
+   
+        Jer.take("Food", 3)
+    )
+    .then(() => console.log(Jer));
+
+
+
+
 });
 
 

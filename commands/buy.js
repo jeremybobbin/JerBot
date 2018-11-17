@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const Users = require("../models/User.js");
 let storeItems = require("../Storage/storeItems.json");
 
 var file = "../Storage/coins.json";
@@ -7,9 +8,19 @@ let coins = require(file);
 var files = "../Storage/userItems.json";
 let items = require(files);
 
+
+
 module.exports.run = async (bot, message, args, storePrices, CollItems) => {
 
     console.log("Hello?");
+
+
+    const user = await Users.find({
+        discordId: message.author.id
+    });
+
+
+
 
     if(!storeItems[1]){
         storeItems[1] = storePrices;
