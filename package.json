@@ -1,0 +1,10 @@
+{
+  "name": "BabyBot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "JBP",
+  "license": "MIT",
+  "dependencies": {
+    "deep-diff": "^1.0.2"
+  }
+}

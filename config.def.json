@@ -1,0 +1,11 @@
+{
+    // Command Prefix
+    "prefix": "",
+
+    // Discord Bot token
+    "token": "",
+
+    // YouTube Data API Key
+    "api_key": ""
+}
+

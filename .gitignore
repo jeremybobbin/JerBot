@@ -1,0 +1,8 @@
+config.json
+log
+logs
+yarn.lock
+node_modules
+.git
+programs
+
