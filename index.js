@@ -93,8 +93,13 @@ mongoose.connect('mongodb://localhost/babybot', {
 
 const db = mongoose.connection;
 
-db.on("error", () => console.log("There was an issue connecting to the database."));
+db.on("error", () => {
+    console.log("There was an issue connecting to the database. Make sure to have MongoDB installed and enabled.");
+});
+
+
 db.once("open", () => {
+    console.log("Connected to database!");
 });
 
 
