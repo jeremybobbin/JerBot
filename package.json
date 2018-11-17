@@ -5,6 +5,7 @@
   "author": "JBP",
   "license": "MIT",
   "dependencies": {
-    "deep-diff": "^1.0.2"
+    "deep-diff": "^1.0.2",
+    "mongoose": "^5.3.12"
   }
 }

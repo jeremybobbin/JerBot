@@ -16,13 +16,6 @@ const YouTube = require('simple-youtube-api');
 const Discord = require("discord.js");
 const mongoose = require("mongoose");
 
-
-
-const User = require("./models/User.js");
-const Store = require("./models/Store.js");
-
-
-
 const botconfig = require("./config.json");
 
 
@@ -90,13 +83,9 @@ const storePrices = {
 mongoose.connect('mongodb://localhost/babybot', {
     useNewUrlParser: true
 });
-
 const db = mongoose.connection;
 
 db.on("error", () => console.log("There was an issue connecting to the database."));
-db.once("open", () => {
-});
-
 
 
 
