@@ -18,8 +18,10 @@ const mongoose = require("mongoose");
 
 
 
+
 const User = require("./models/User.js");
 const Store = require("./models/Item.js");
+const Fmt = require("./models/Fmt.js");
 
 
 
@@ -334,8 +336,10 @@ bot.on("message", async (message) => {
 
     let commandfile = bot.commands.get(command.slice(prefix.length));
 
-    if(commandfile) commandfile.run(bot,message,args,storePrices,CollItems);
-
+    if(commandfile)
+        commandfile.run(bot,message,args,storePrices,CollItems)
+            .then(response => message.channel.send(response))
+            .catch(response => message.channel.send(Fmt.Error(response)))
 
     //// if(command === `${prefix}help`) {
     //		let commands = 'baba\npaci\nfurry\nnini\nsource\nhelp\nspank\nchocey\npopcorn\njazzhands\npizza\ninvite\nping\ndiapercheck\nplay\nnp\nvolume\npause\nstop\nUserInfo\nprofilepicture\ntodolist\nserverinfo';

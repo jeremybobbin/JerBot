@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
     if(TaggedUser = message.mentions.users.first())
         response = `yes ${TaggedUser} definly is *giggles*`;    
 
-    message.channel.send(response);	
+    return response;	
 };
 
 module.exports.help = {
