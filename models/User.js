@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Item = require("./Item.js");
 
 
 const UserSchema = new mongoose.Schema({
@@ -40,8 +41,6 @@ UserSchema.methods = {
             });
 
 
-        console.log(this);
-        return this.save();
     },
 
     take(item, count = 1) {
@@ -50,16 +49,47 @@ UserSchema.methods = {
         if(isNaN(count) || count < 0)
             throw `Cannot take ${count} ${item}`;
 
-        if(userInstance === null || userInstance.count < count)
-            throw `User doesn't have enough ${item}`;
+
+        if(!userInstance || userInstance.count < count)
+            throw `User doesn't have enough ${item}s.`;
 
 
         userInstance.count -= count;
 
+    },
 
-        this.save();
+    async buy(name, count) {
+
+        let item = await Item.findOne({ name });
+
+        if(item === null)
+            throw `Cannot find item ${name}`;
+
+        this.take("coin", item.price * count);
+
+        this.give(item.name, count);
+
+    },
+
+
+
+    getInventory() {
+
+        const inventoryObj = {};
+
+        this.items.forEach(({name, count}) => {
+           inventoryObj[name] = count;
+        });
+
+        return inventoryObj;
+      
+    },
+
+    getUserInfo() {
+        return this;
     }
         
+    
     
 
 }
