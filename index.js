@@ -39,10 +39,9 @@ const items = require(files);
 const storeItems = require(storeFile)
 
 
-const bot = new Discord.Client();
-bot.commands = new Discord.Collection();
-console.log
+bot = new Discord.Client();
 
+bot.commands = new Discord.Collection();
 
 
 

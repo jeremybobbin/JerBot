@@ -27,7 +27,6 @@ const getUserInstance = (user, itemName) =>
 UserSchema.methods = {
 
     give(item, count = 1) {
-
         const userInstance = getUserInstance(this, item);
 
         if(count < 1 || isNaN(count))
@@ -41,14 +40,20 @@ UserSchema.methods = {
             });
 
 
+        return this;
+
+
     },
 
     take(item, count = 1) {
         const userInstance = getUserInstance(this, item);
+        console.log("USER: ", this);
+
 
         if(isNaN(count) || count < 0)
             throw `Cannot take ${count} ${item}`;
 
+        console.log(userInstance);
 
         if(!userInstance || userInstance.count < count)
             throw `User doesn't have enough ${item}s.`;
@@ -56,18 +61,18 @@ UserSchema.methods = {
 
         userInstance.count -= count;
 
+        return this;
+
     },
 
-    async buy(name, count) {
+    async buy(name, count = 1) {
 
         let item = await Item.findOne({ name });
 
         if(item === null)
             throw `Cannot find item ${name}`;
 
-        this.take("coin", item.price * count);
-
-        this.give(item.name, count);
+        return this.take("coin", item.price * count).give(item.name, count);
 
     },
 

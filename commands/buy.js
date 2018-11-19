@@ -21,30 +21,21 @@ module.exports.run = async (bot, message, args, storePrices, CollItems) => {
     
     const discordId = message.author.id;
 
-    const user = await Users.findOne({ discordId });
+    let user = await Users.findOne({ discordId });
 
-    try {
 
-        if(user === null) {
-            user = new Users({ discordId });
-            await user.save();
-        }
-
-        let { item, amount } = Parser.purchase(args);
-        let inventory = user.getInventory();
-
-        await user.buy(item, amount);
-
-        invString = fmt.Inventory(user.name, inventory);
-
-        message.channel.send(itemEmbed);
-
-    } catch (err) {
-        err = Fmt.Error(err);
-
-        message.channel.send(err);
-
+    if(user === null) {
+        user = new Users({ discordId });
+        await user.save();
     }
+
+    let { item, amount } = Parser.purchase(args);
+    let inventory = user.getInventory();
+
+    await user.buy(item, amount);
+    await user.save();
+
+    return Fmt.Inventory(message.author.username, inventory);
 
 
 }
